@@ -10,4 +10,12 @@
  */
 public class HolaTic {
     
+    public static void main (String args[]){
+        
+        
+        if(nota >= 0 && nota < 3){
+            System.out.println("Deficiente...");
+        }else if()
+    }
+    
 }
