@@ -34,8 +34,8 @@ public class EjercicioPractica {
         double x2 = sc.nextDouble();
         double y2 = sc.nextDouble();
         
-        
-        double distance = Math.sqrt(Math.pov(x2 - x1),2) + Math.pov((y2-y1),2);
+        double distance;
+        distance = Math.sqrt(Math.pow(x2 - x1),2) + Math.pow(y2 - y1),2);
         
         System.out.println("La distancia de la coordenadas es: " + distance);
 
