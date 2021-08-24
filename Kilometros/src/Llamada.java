@@ -8,6 +8,8 @@
  *
  * @author rodri
  */
+
+// conversion de kilometros a metros
 public class Llamada {
 
     /**
