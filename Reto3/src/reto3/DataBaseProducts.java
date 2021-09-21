@@ -5,7 +5,9 @@
  */
 package reto3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +40,17 @@ public class DataBaseProducts {
             listaProductos.put(10, new Product(10, "Jamon", 18000.0, 55));
 
         }
+        
+        
+        public List <Product> getBasedeDatos(){
+            return new ArrayList<> (this.listaProductos.values());
+        }
+        
+        
+        
+        
+        
+        
 // AGREGAMOS PRODUCTOS
         public void agregar(Product producto) {
             listaProductos.put(producto.getCodigo(), producto);

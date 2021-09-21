@@ -14,38 +14,47 @@ import javax.swing.table.TableModel;
  * @author rodri
  */
 public class ControlTabla implements TableModel {
+
     List<Product> ListaProduct;
     String[] Columnas;
     TableModelListener tableModelListener;
-    
-    public ControlTabla (List<Product> ListaProducto){
+
+    public ControlTabla(List<Product> ListaProducto) {
         this.ListaProduct = ListaProducto;
-        this.Columnas = new String []{"Nombre", "Precio", "Inventario"};
+        this.Columnas = new String[]{"Nombre", "Precio", "Inventario"};
     }
 
     @Override
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.ListaProduct.size();
     }
 
     @Override
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.Columnas.length;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.Columnas[columnIndex];
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (columnIndex) {
+            case 0:
+                return String.class;
+            case 1:
+                return Double.class;
+            case 2:
+                return Integer.class;
+        }
+        return null;
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
     @Override
@@ -54,8 +63,18 @@ public class ControlTabla implements TableModel {
     }
 
     @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setValueAt(Object ProductoN, int rowIndex, int columnIndex) {
+        Product Produc = this.ListaProduct.get(rowIndex);
+        switch (columnIndex) {
+            case 0:
+                Produc.setNombre(String.valueOf(ProductoN));
+            case 1:
+                Produc.setPrecio((Double) ProductoN);
+            case 2:
+                Produc.setInventario((int) ProductoN);
+
+        }
+        this.ListaProduct.set(rowIndex, Produc);
     }
 
     @Override
