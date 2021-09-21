@@ -46,6 +46,16 @@ public class DataBaseProducts {
             return new ArrayList<> (this.listaProductos.values());
         }
         
+        public int codigoMayor(){
+            int codigoAuxi = 0;
+            for(Product items: listaProductos.values()){
+                if(items.getCodigo() > codigoAuxi){
+                    codigoAuxi = items.getCodigo();
+                    
+                }
+            }
+            return codigoAuxi;
+        }
         
         
         
