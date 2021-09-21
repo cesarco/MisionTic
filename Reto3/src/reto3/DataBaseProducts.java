@@ -57,6 +57,15 @@ public class DataBaseProducts {
             return codigoAuxi;
         }
         
+        public int cosultarCodigo(String nombre){
+            int codigo = 0;
+            for(Product items: listaProductos.values()){
+                if(nombre.equals(items.getNombre())){
+                    codigo = items.getCodigo();
+                }
+            }
+           return codigo;
+        }
         
         
         

@@ -143,8 +143,8 @@ public class ACTUALIZAR extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtInventario2;
-    private javax.swing.JTextField txtNombre2;
-    private javax.swing.JTextField txtPrecio2;
+    public static javax.swing.JTextField txtInventario2;
+    public static javax.swing.JTextField txtNombre2;
+    public static javax.swing.JTextField txtPrecio2;
     // End of variables declaration//GEN-END:variables
 }

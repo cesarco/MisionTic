@@ -1,4 +1,3 @@
-
 package reto3;
 
 import javax.swing.JOptionPane;
@@ -10,28 +9,37 @@ import javax.swing.JOptionPane;
 public class Principle extends javax.swing.JFrame {
 
     public DataBaseProducts baseDatos;
+    public String nombreActualizar;
+
     public Principle() {
         baseDatos = new DataBaseProducts();
-        
+
         initComponents();
         controlTablaModelo();
     }
-    public void controlTablaModelo(){
+
+    public void controlTablaModelo() {
         tabla.setModel(new ControlTabla(this.baseDatos.getBasedeDatos()));
-        
+
     }
-    public boolean validarDatos(String nombre, String precio, String inventario){
+
+    public boolean validarDatos(String nombre, String precio, String inventario) {
         boolean result = true;
-        if(nombre.isEmpty() || precio.isEmpty() || inventario.isEmpty()){
+        if (nombre.isEmpty() || precio.isEmpty() || inventario.isEmpty()) {
             result = false;
         }
         return result;
     }
-    
-    public void limpiarCajas(){
+
+    public void limpiarCajas() {
         txtNombre.setText("");
         txtPrecio.setText(" ");
         txtInventario.setText(" ");
+    }
+    
+    private Product productoSeleccionado(){
+        int codigo = baseDatos.consultarCodigo(nombreActualizar);
+        return this.baseDatos.productoSeleccionadoBaseDatos(codigo);
     }
 
     @SuppressWarnings("unchecked")
@@ -143,11 +151,21 @@ public class Principle extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         btnBorrar.setText("Borrar");
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         bntInforme.setText("Infrome");
         bntInforme.addActionListener(new java.awt.event.ActionListener() {
@@ -213,26 +231,55 @@ public class Principle extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-      if (validarDatos (txtNombre.getText(), txtPrecio.getText(), txtInventario.getText() )){
-          
-          int codigo = baseDatos.codigoMayor()+1;
-          String nombre = txtNombre.getText();
-          double precio = Double.parseDouble(txtPrecio.getText());
-          int inventario = Integer.parseInt(txtInventario.getText());
-          Product productoIngresado = new Product (codigo, nombre, precio, inventario);
-          
-          baseDatos.agregar(productoIngresado);
-          controlTablaModelo();
-          limpiarCajas();
-          
-          JOptionPane.showMessageDialog(this, "El producto fue agregado correctamente");
-          
-      }  else{
-          JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
-        
-      
+        if (validarDatos(txtNombre.getText(), txtPrecio.getText(), txtInventario.getText())) {
+
+            int codigo = baseDatos.codigoMayor() + 1;
+            String nombre = txtNombre.getText();
+            double precio = Double.parseDouble(txtPrecio.getText());
+            int inventario = Integer.parseInt(txtInventario.getText());
+            Product productoIngresado = new Product(codigo, nombre, precio, inventario);
+
+            baseDatos.agregar(productoIngresado);
+            controlTablaModelo();
+            limpiarCajas();
+
+            JOptionPane.showMessageDialog(this, "El producto fue agregado correctamente");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+
+        if (validarDatos(txtNombre.getText(), txtPrecio.getText(), txtInventario.getText())) {
+            Product producto = productoSeleccionado();
+
+            ACTUALIZAR ventanaActualizar = new ACTUALIZAR();
+            ventanaActualizar.setVisible(true);
+            ventanaActualizar.setLocationRelativeTo(this);
+
+            ACTUALIZAR.txtNombre2.setText(txtNombre.getText());
+            ACTUALIZAR.txtPrecio2.setText(txtPrecio.getText());
+            ACTUALIZAR.txtInventario2.setText(txtInventario.getText());
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para actualizar");
+
+        }
+
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        nombreActualizar = (tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+        txtNombre.setText(tabla.getValueAt(tabla.getSelectedRow(), 0).toString());
+        txtPrecio.setText(tabla.getValueAt(tabla.getSelectedRow(), 1).toString());
+        txtInventario.setText(tabla.getValueAt(tabla.getSelectedRow(), 2).toString());
+
+    }//GEN-LAST:event_tablaMouseClicked
 
     /**
      * @param args the command line arguments
